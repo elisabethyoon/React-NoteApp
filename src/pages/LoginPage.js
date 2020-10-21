@@ -25,8 +25,10 @@ class LoginPage extends Component {
 
 		instance.post('/login', {username: this.state.username , password: this.state.password})
 			.then((response) => {
-				console.log(response.data.user)
+				console.log('로그인')
+				const token = response.data.token;
 				const nickname = response.data.user.nickname
+				// localStorage.setItem('token', token)
 				alert(`${nickname}님 반갑습니당. 메인으로 이동쓰~!`)
 				this.props.history.push('/main')
 			})
