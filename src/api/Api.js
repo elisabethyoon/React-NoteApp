@@ -10,8 +10,8 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
 	// Do something before request is sent
+	console.log('인터셉터')
 	const token = localStorage.getItem('token');
-	console.log(config)
 	config.headers.Authorization = token;
 	return config;
 }, function (error) {

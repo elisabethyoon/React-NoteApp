@@ -27,8 +27,8 @@ class LoginPage extends Component {
 			.then((response) => {
 				console.log('로그인')
 				const token = response.data.token;
+				localStorage.setItem('token', token)
 				const nickname = response.data.user.nickname
-				// localStorage.setItem('token', token)
 				alert(`${nickname}님 반갑습니당. 메인으로 이동쓰~!`)
 				this.props.history.push('/main')
 			})
