@@ -1,56 +1,48 @@
-import React, { Component } from 'react'
-import instance from '../api/Api'
+import React, { Component } from "react";
+import { AST_Await } from "terser";
 
-class LoginPage extends Component {
-	constructor(props){
-		super(props)
-		this.state = {
-			username: '',
-			password: '',
-		}
-	}
+export class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: ""
+    };
+  }
+  onChangeValue = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
 
-	onChangeForm = (e) => {
-		const target = e.target
-		const name = target.name
-		const value = target.value
-
-		this.setState({
-			[name]: value
-		})
-	}
-
-	onSubmitForm = (e) => {
-		e.preventDefault();
-
-		instance.post('/login', {username: this.state.username , password: this.state.password})
-			.then((response) => {
-				console.log('로그인')
-				const token = response.data.token;
-				localStorage.setItem('token', token)
-				const nickname = response.data.user.nickname
-				alert(`${nickname}님 반갑습니당. 메인으로 이동쓰~!`)
-				this.props.history.push('/main')
-			})
-			.catch(error => console.log(error.response))
-		
-	}
-	render() {
-		return (
-			<div>
+    this.setState({
+      [name]: value
+    });
+  };
+  render() {
+    return (
+      <div>
         <h1 className="page-header">로그인</h1>
         <div className="contents">
           <div className="form-wrapper form-wrapper-sm">
-            <form action="" className="form" onSubmit={this.onSubmitForm} >
+            <form action="" className="form">
               <div>
                 <label htmlFor="username">id:</label>
-                <input id="username" type="text" name="username" onChange={this.onChangeForm}/>
+                <input
+                  id="username"
+                  type="text"
+                  name="username"
+                  onChange={this.onChangeValue}
+                />
               </div>
               <div>
                 <label htmlFor="password">pw: </label>
-                <input id="password" type="password" name="password" onChange={this.onChangeForm} />
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  onChange={this.onChangeValue}
+                />
               </div>
-              <button type="submit" className="btn" >
+              <button type="submit" className="btn">
                 로그인
               </button>
             </form>
@@ -58,8 +50,8 @@ class LoginPage extends Component {
           </div>
         </div>
       </div>
-		)
-	}
+    );
+  }
 }
 
-export default LoginPage
+export default Login;
