@@ -2,17 +2,29 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 export class AppHeader extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const { token, logout } = this.props;
+    console.log(this.props.token, "token");
     return (
       <header>
         <div>
-          <NavLink to="/login" className="logo">
+          <NavLink to={token ? "/main" : "/login"} className="logo">
             NOTE
           </NavLink>
         </div>
         <div className="navigations">
-          <NavLink to="/login">로그인</NavLink>
-          <NavLink to="/signup">회원가입</NavLink>
+          {token ? (
+            <button onClick={logout}>로그아웃</button>
+          ) : (
+            <>
+              <NavLink to="/login">로그인</NavLink>
+              <NavLink to="/signup">회원가입</NavLink>
+            </>
+          )}
         </div>
       </header>
     );
