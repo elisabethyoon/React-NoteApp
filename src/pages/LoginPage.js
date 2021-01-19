@@ -30,6 +30,7 @@ export class Login extends Component {
       .then((response) => {
         const token = response.data.token;
         this.props.login(token);
+        localStorage.setItem("token", token);
         const username = response.data.user.username;
         alert(`${username}님 반가워용! 메인으로 이동할게유`);
         history.push("/main");
