@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { AST_Await } from "terser";
+import axios from "axios";
+import history from "../utils/history";
 
 export class Login extends Component {
   constructor(props) {
@@ -9,27 +10,47 @@ export class Login extends Component {
       password: ""
     };
   }
+
   onChangeValue = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-
     this.setState({
       [name]: value
     });
   };
+
+  onSubmit = () => {
+    const { username, password } = this.state;
+    axios
+      .post("http://localhost:3001/login", {
+        username,
+        password
+      })
+      .then((response) => {
+        const token = response.data.token;
+        const username = response.data.user.username;
+        this.props.login(token);
+        alert(`${username}님 반갑습니다. 메인화면으로 이동합니다.`);
+        history.push("/main");
+      })
+      .catch((error) => console.log(error));
+  };
+
   render() {
+    const { username, password } = this.state;
     return (
       <div>
         <h1 className="page-header">로그인</h1>
         <div className="contents">
           <div className="form-wrapper form-wrapper-sm">
-            <form action="" className="form">
+            <div action="" className="form">
               <div>
                 <label htmlFor="username">id:</label>
                 <input
                   id="username"
                   type="text"
                   name="username"
+                  value={username}
                   onChange={this.onChangeValue}
                 />
               </div>
@@ -39,13 +60,14 @@ export class Login extends Component {
                   id="password"
                   type="password"
                   name="password"
+                  value={password}
                   onChange={this.onChangeValue}
                 />
               </div>
-              <button type="submit" className="btn">
+              <button type="button" className="btn" onClick={this.onSubmit}>
                 로그인
               </button>
-            </form>
+            </div>
             <p className="log"></p>
           </div>
         </div>
