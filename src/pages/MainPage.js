@@ -9,8 +9,8 @@ export class MainPage extends Component {
       lists: []
     };
   }
-  componentDidMount() {
-    console.log("come on!!!!");
+
+  fetchList = () => {
     Api.get("posts")
       .then(({ data }) => {
         // const { data } = response;
@@ -21,7 +21,28 @@ export class MainPage extends Component {
         console.log(this.state.lists, "aaa");
       })
       .catch((error) => console.log(error));
+  };
+
+  componentDidMount() {
+    console.log("come on!!!!");
+    this.fetchList();
   }
+
+  // 리스트 삭제버튼
+  deleteList = (_id) => {
+    console.log("delete");
+    const confirmCheck = window.confirm("정말 삭제하시겠습니까?");
+    if (confirmCheck) {
+      // comfirm 확인 누를시
+      console.log(_id, "asdf");
+      Api.delete(`posts/${_id}`)
+        .then(() => {
+          alert("삭제가 완료되었습니다.");
+          this.fetchList();
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   render() {
     const { lists } = this.state;
@@ -40,7 +61,10 @@ export class MainPage extends Component {
                     <div className="post-time">
                       {createdAt}
                       <i className="icon ion-md-create"></i>
-                      <i className="icon ion-md-trash"></i>
+                      <i
+                        className="icon ion-md-trash"
+                        onClick={() => this.deleteList(_id)}
+                      ></i>
                     </div>
                   </li>
                 );
