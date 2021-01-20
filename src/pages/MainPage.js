@@ -14,27 +14,22 @@ export class MainPage extends Component {
     Api.get("posts")
       .then(({ data }) => {
         // const { data } = response;
-        console.log(data);
         this.setState({
           lists: data.posts
         });
-        console.log(this.state.lists, "aaa");
       })
       .catch((error) => console.log(error));
   };
 
   componentDidMount() {
-    console.log("come on!!!!");
     this.fetchList();
   }
 
   // 리스트 삭제버튼
   deleteList = (_id) => {
-    console.log("delete");
     const confirmCheck = window.confirm("정말 삭제하시겠습니까?");
     if (confirmCheck) {
       // comfirm 확인 누를시
-      console.log(_id, "asdf");
       Api.delete(`posts/${_id}`)
         .then(() => {
           alert("삭제가 완료되었습니다.");

@@ -2,13 +2,8 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 export class AppHeader extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { token, logout } = this.props;
-    console.log(this.props.token, "token");
     return (
       <header>
         <div>

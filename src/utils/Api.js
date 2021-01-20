@@ -9,7 +9,6 @@ const Api = axios.create({
 // 요청 인터셉터 추가
 Api.interceptors.request.use(
   function(config) {
-    console.log(config, "모얌??");
     config.headers.Authorization = localStorage.getItem("token");
     // 요청을 보내기 전에 수행할 일
     // ...

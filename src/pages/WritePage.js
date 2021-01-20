@@ -22,20 +22,23 @@ export class WritePage extends Component {
   // 등록버튼
   onSubmitForm = () => {
     const { title, contents } = this.state;
-    Api.post("posts", {
-      title,
-      contents
-    })
-      .then(() => {
-        alert("게시글이 등록되었습니다. 메인페이지로 이동합니다.");
-        history.push("/main");
+    if (!title || !contents) {
+      alert("글을 작성하세요!!");
+    } else {
+      Api.post("posts", {
+        title,
+        contents
       })
-      .catch(({ response }) => {
-        console.log(response.data.message);
-        this.setState({
-          errorText: response.data.message
+        .then(() => {
+          alert("게시글이 등록되었습니다. 메인페이지로 이동합니다.");
+          history.push("/main");
+        })
+        .catch(({ response }) => {
+          this.setState({
+            errorText: response.data.message
+          });
         });
-      });
+    }
   };
 
   // 취소버튼

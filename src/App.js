@@ -12,18 +12,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // 새로고침해도 토큰값 로컬스토리지에서 받아옴
       token: localStorage.getItem("token") || ""
     };
   }
   login = (token) => {
-    console.log(token, "받아땅");
     this.setState({
       token: token
     });
+    localStorage.getItem("token");
   };
 
   logout = () => {
-    console.log("하하하");
     this.setState({
       token: ""
     });
