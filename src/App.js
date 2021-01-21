@@ -7,6 +7,7 @@ import ErrorPage from "./pages/ErrorPage";
 import MainPage from "./pages/MainPage";
 import history from "./utils/history";
 import WritePage from "./pages/WritePage";
+import UpdatePage from "./pages/UpdatePage";
 
 class App extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class App extends Component {
           <Route exact path="/signup" component={SingupPage}></Route>
           <Route exact path="/main" component={MainPage}></Route>
           <Route exact path="/write" component={WritePage}></Route>
+          <Route exact path="/update/:noteId" component={UpdatePage}></Route>
           <Route exact path="*" component={ErrorPage}></Route>
         </Switch>
       </div>
