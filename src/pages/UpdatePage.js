@@ -1,24 +1,29 @@
 import React, { Component } from "react";
 import Api from "../utils/Api";
 import history from "../utils/history";
-import { thisExpression } from "@babel/types";
+import LoadingBar from "../components/LoadingBar";
 
 export class UpdatePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
-      contents: ""
+      contents: "",
+      isLoading: false
     };
   }
   componentDidMount() {
+    this.setState({
+      isLoading: true
+    });
     const noteId = this.props.match.params.noteId;
     Api.get(`posts/${noteId}`)
       .then(({ data }) => {
         const { title, contents } = data;
         this.setState({
           title,
-          contents
+          contents,
+          isLoading: false
         });
       })
       .catch((error) => console.log(error));
@@ -60,7 +65,7 @@ export class UpdatePage extends Component {
     }
   };
   render() {
-    const { title, contents } = this.state;
+    const { title, contents, isLoading } = this.state;
     return (
       <div className="contents">
         <h1 className="page-header">노트 수정</h1>
@@ -101,6 +106,7 @@ export class UpdatePage extends Component {
           </div>
           {/* <p className="log">에러</p> */}
         </div>
+        {isLoading ? <LoadingBar /> : null}
       </div>
     );
   }
