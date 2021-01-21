@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import Api from "../utils/Api";
 import history from "../utils/history";
 
 export class SingupPage extends Component {
@@ -23,8 +23,7 @@ export class SingupPage extends Component {
   onSubmitSignup = () => {
     const { username, password, nickname } = this.state;
     const apiParams = { username, password, nickname };
-    axios
-      .post("http://localhost:3001/signup", apiParams)
+    Api.post("signup", apiParams)
       .then((response) => {
         const name = response.data.username;
         alert(

@@ -6,12 +6,14 @@ import SingupPage from "./pages/SingupPage";
 import ErrorPage from "./pages/ErrorPage";
 import MainPage from "./pages/MainPage";
 import history from "./utils/history";
+import WritePage from "./pages/WritePage";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: ""
+      // 새로고침해도 토큰값 로컬스토리지에서 받아옴
+      token: localStorage.getItem("token")
     };
   }
 
@@ -19,16 +21,16 @@ class App extends Component {
     this.setState({
       token: token
     });
+    localStorage.getItem("token");
   };
 
   logoutHandler = () => {
-    console.log("토근 비워져라!!");
-    const confirmCheck = window.confirm("진짜루??");
-    console.log(confirmCheck);
+    const confirmCheck = window.confirm("정말 로그아웃하시겠습니까?");
     if (confirmCheck) {
       this.setState({
         token: ""
       });
+      localStorage.removeItem("token");
       history.push("/login");
     }
   };
@@ -52,6 +54,7 @@ class App extends Component {
           ></Route>
           <Route exact path="/signup" component={SingupPage}></Route>
           <Route exact path="/main" component={MainPage}></Route>
+          <Route exact path="/write" component={WritePage}></Route>
           <Route exact path="*" component={ErrorPage}></Route>
         </Switch>
       </div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import Api from "../utils/Api";
 import history from "../utils/history";
 
 export class Login extends Component {
@@ -21,15 +21,15 @@ export class Login extends Component {
 
   onSubmit = () => {
     const { username, password } = this.state;
-    axios
-      .post("http://localhost:3001/login", {
-        username,
-        password
-      })
+    Api.post("login", {
+      username,
+      password
+    })
       .then((response) => {
         const token = response.data.token;
         const username = response.data.user.username;
         this.props.login(token);
+        localStorage.setItem("token", token);
         alert(`${username}님 반갑습니다. 메인화면으로 이동합니다.`);
         history.push("/main");
       })
