@@ -8,6 +8,7 @@ import MainPage from "./pages/MainPage";
 import history from "./utils/history";
 import WritePage from "./pages/WritePage";
 import UpdatePage from "./pages/UpdatePage";
+import AuthRoute from "./components/AuthRoute";
 
 class App extends Component {
   constructor(props) {
@@ -32,19 +33,38 @@ class App extends Component {
     history.push("/login");
   };
   render() {
+    const { token } = this.state;
     return (
       <div>
-        <AppHeader token={this.state.token} logout={this.logout} />
+        <AppHeader token={token} logout={this.logout} />
         <Switch>
+          <AuthRoute
+            exact
+            path={["/", "/main"]}
+            token={token}
+            component={MainPage}
+          />
+          {/* <Route
+            exact
+            path={["/", "/main"]}
+            token={token}
+            component={MainPage}
+          ></Route> */}
           <Route
             exact
-            path={["/", "/login"]}
+            path={"/login"}
             render={(props) => <LoginPage {...props} login={this.login} />}
           ></Route>
           <Route exact path="/signup" component={SingupPage}></Route>
-          <Route exact path="/main" component={MainPage}></Route>
-          <Route exact path="/write" component={WritePage}></Route>
-          <Route exact path="/update/:noteId" component={UpdatePage}></Route>
+          <AuthRoute exact path="/write" token={token} component={WritePage} />
+          {/* <Route exact path="/write" component={WritePage}></Route> */}
+          <AuthRoute
+            exact
+            path="/update"
+            token={token}
+            component={UpdatePage}
+          />
+          {/* <Route exact path="/update/:noteId" component={UpdatePage}></Route> */}
           <Route exact path="*" component={ErrorPage}></Route>
         </Switch>
       </div>
