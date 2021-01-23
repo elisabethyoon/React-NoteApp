@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Api from "../utils/Api";
+import history from "../utils/history";
 
 export class MainPage extends Component {
   constructor(props) {
@@ -36,8 +37,15 @@ export class MainPage extends Component {
         .catch((error) => console.log(error));
     }
   };
+
+  // 게시글 수정
+  updateForm = (_id) => {
+    console.log(_id);
+    history.push(`/update/${_id}`);
+  };
   render() {
     const { lists } = this.state;
+    console.log(this.props, "dd");
     return (
       <div>
         <h1 className="page-header">학습노트 리스트</h1>
@@ -52,7 +60,10 @@ export class MainPage extends Component {
                     <div className="post-contents">{contents}</div>
                     <div className="post-time">
                       {createdAt}
-                      <i className="icon ion-md-create"></i>
+                      <i
+                        className="icon ion-md-create"
+                        onClick={() => this.updateForm(_id)}
+                      ></i>
                       <i
                         className="icon ion-md-trash"
                         onClick={() => this.deleteList(_id)}
