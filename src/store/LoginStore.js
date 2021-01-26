@@ -1,5 +1,4 @@
 import { observable, action, makeAutoObservable, runInAction } from "mobx";
-import { toJS } from "mobx";
 import Api from "../utils/Api";
 import history from "../utils/history";
 
@@ -77,7 +76,6 @@ class LoginStore {
     Api.post("login", ApiParams)
       .then(({ data }) => {
         runInAction(() => {
-          console.log(data, "data");
           const token = data.token;
           this.token = token;
           localStorage.setItem("token", token);
@@ -87,6 +85,17 @@ class LoginStore {
         });
       })
       .catch((err) => console.log(err));
+  }
+
+  // 로그아웃
+  @action
+  logout() {
+    const confirmCheck = window.confirm("로그아웃 하시겠습니까?");
+    if (confirmCheck) {
+      this.token = localStorage.removeItem("token");
+      alert("로그인화면으로 이동합니다");
+      history.push("/login");
+    }
   }
 }
 

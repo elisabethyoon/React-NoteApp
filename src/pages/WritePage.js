@@ -1,22 +1,46 @@
 import React, { Component } from "react";
 import { observer, inject } from "mobx-react";
-import { toJS } from "mobx";
 
 @inject("noteStore")
 @observer
 class WritePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      writeLengthCheck: 0
+    };
+  }
   // value입력
   onChangeValueWrite = (e) => {
     const { noteStore } = this.props;
     const value = e.target.value;
     const name = e.target.name;
-    noteStore.onChangeValueWrite(name, value);
+    console.log(name);
+    if (name === "contents") {
+      const check = value.length;
+      if (check > 10) {
+        alert("10글자 넘엇떠");
+      } else {
+        noteStore.onChangeValueWrite(name, value);
+        this.setState({
+          writeLengthCheck: check
+        });
+      }
+    } else if (name === "title") {
+      noteStore.onChangeValueWrite(name, value);
+    }
   };
 
   // 게시물 등록
   onSubmitFormWrite = () => {
     const { noteStore } = this.props;
     noteStore.onSubmitFormWrite();
+  };
+
+  // 취소버튼
+  cancelFormWrite = () => {
+    const { noteStore } = this.props;
+    noteStore.cancelFormWrite();
   };
 
   render() {
@@ -48,7 +72,9 @@ class WritePage extends Component {
                 value={contents}
                 onChange={this.onChangeValueWrite}
               ></textarea>
-              <div className="validation-chk">숫자체크</div>
+              <div className="validation-chk">
+                {this.state.writeLengthCheck}
+              </div>
             </div>
             <button
               type="submit"
@@ -57,7 +83,11 @@ class WritePage extends Component {
             >
               등록
             </button>
-            <button type="button" className="btn outline">
+            <button
+              type="button"
+              className="btn outline"
+              onClick={this.cancelFormWrite}
+            >
               취소
             </button>
           </div>
