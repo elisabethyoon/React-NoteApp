@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { observer, inject } from "mobx-react";
 
-export class AppHeader extends Component {
+@inject("loginStore")
+@observer
+class AppHeader extends Component {
+  logout = () => {
+    const { loginStore } = this.props;
+    loginStore.logout();
+  };
   render() {
-    const { token, logout } = this.props;
+    const { loginStore } = this.props;
+    const token = loginStore.token;
     return (
       <header>
         <div>
@@ -13,7 +21,7 @@ export class AppHeader extends Component {
         </div>
         <div className="navigations">
           {token ? (
-            <button onClick={logout}>로그아웃</button>
+            <button onClick={this.logout}>로그아웃</button>
           ) : (
             <>
               <NavLink to="/login">로그인</NavLink>

@@ -1,81 +1,67 @@
 import React, { Component } from "react";
-import Api from "../utils/Api";
-import history from "../utils/history";
+import { observer, inject } from "mobx-react";
 
-export class SingupPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      password: "",
-      nickname: ""
-    };
-  }
-
+@inject("loginStore")
+@observer
+class SingupPage extends Component {
+  // input value
   onChangeValue = (e) => {
-    const name = e.target.name;
+    const { loginStore } = this.props;
     const value = e.target.value;
-    this.setState({
-      [name]: value
-    });
+    const name = e.target.name;
+    loginStore.onChangeValue(name, value);
   };
 
+  // 회원가입
   onSubmitForm = () => {
-    const { username, password, nickname } = this.state;
-    const apiParams = {
-      username,
-      password: password,
-      nickname: nickname
-    };
-    Api.post("signup", apiParams)
-      .then((response) => {
-        alert(
-          `${response.data.username}님 회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.`
-        );
-        history.push("/login");
-      })
-      .catch((error) => console.log(error));
+    const { loginStore } = this.props;
+    loginStore.onSubmitForm();
   };
   render() {
-    const { username, password, nickname } = this.state;
+    const { loginStore } = this.props;
+    const { formValueSignup } = loginStore;
+    const { username, password, nickname } = formValueSignup;
     return (
       <div>
-        <h1 className="page-header">회원가입</h1>
         <div className="contents">
           <div className="form-wrapper form-wrapper-sm">
+            <h1 className="page-header">SIGN UP</h1>
             <div action="" className="form">
               <div>
-                <label htmlFor="username">id:</label>
+                <label htmlFor="username">ID</label>
                 <input
                   id="username"
                   type="text"
                   name="username"
                   value={username}
+                  placeholder="ID"
                   onChange={this.onChangeValue}
                 />
               </div>
               <div>
-                <label htmlFor="password">pw: </label>
+                <label htmlFor="password">PW</label>
                 <input
                   id="password"
                   type="text"
                   name="password"
                   value={password}
+                  placeholder="PW"
                   onChange={this.onChangeValue}
                 />
               </div>
               <div>
-                <label htmlFor="nickname">nickname: </label>
+                <label htmlFor="nickname">NICKNAME</label>
                 <input
                   id="nickname"
                   type="text"
                   name="nickname"
                   value={nickname}
+                  placeholder="NICKNAME"
                   onChange={this.onChangeValue}
                 />
               </div>
               <button type="button" className="btn" onClick={this.onSubmitForm}>
-                회원 가입
+                SIGN UP
               </button>
             </div>
           </div>

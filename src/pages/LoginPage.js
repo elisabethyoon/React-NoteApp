@@ -1,73 +1,60 @@
 import React, { Component } from "react";
-import Api from "../utils/Api";
-import history from "../utils/history";
+import { observer, inject } from "mobx-react";
 
-export class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      password: ""
-    };
-  }
-  onChangeValue = (e) => {
-    const name = e.target.name;
+@inject("loginStore")
+@observer
+class Login extends Component {
+  // input value
+  onChangeValueLogin = (e) => {
+    const { loginStore } = this.props;
     const value = e.target.value;
-
-    this.setState({
-      [name]: value
-    });
+    const name = e.target.name;
+    loginStore.onChangeValueLogin(name, value);
   };
 
-  // 로그인 버튼 클릭
-  login = () => {
-    const { username, password } = this.state;
-    const apiparams = {
-      username: username,
-      password: password
-    };
-    Api.post("login", apiparams)
-      .then((response) => {
-        const token = response.data.token;
-        this.props.login(token);
-        localStorage.setItem("token", token);
-        const username = response.data.user.username;
-        alert(`${username}님 반가워용! 메인으로 이동할게유`);
-        history.push("/main");
-      })
-      .catch((error) => console.log(error));
-    // axios를 이용하여 로그인 정보를 전달하고 응답값을 받아온다.
+  // 로그인
+  onSubmitLogin = () => {
+    const { loginStore } = this.props;
+    loginStore.onSubmitLogin();
   };
   render() {
-    const { username, password } = this.state;
+    const { loginStore } = this.props;
+    const { formValueLogin } = loginStore;
+    const { username, password } = formValueLogin;
     return (
       <div>
-        <h1 className="page-header">로그인</h1>
         <div className="contents">
           <div className="form-wrapper form-wrapper-sm">
+            <h1 className="page-header">Login</h1>
             <div className="form">
               <div>
-                <label htmlFor="username">id:</label>
+                <label htmlFor="username">ID</label>
                 <input
                   id="username"
                   type="text"
                   name="username"
                   value={username}
-                  onChange={this.onChangeValue}
+                  placeholder="ID"
+                  onChange={this.onChangeValueLogin}
                 />
               </div>
               <div>
-                <label htmlFor="password">pw: </label>
+                <label htmlFor="password">PW</label>
                 <input
                   id="password"
                   type="password"
                   name="password"
                   value={password}
-                  onChange={this.onChangeValue}
+                  placeholder="PW"
+                  onChange={this.onChangeValueLogin}
                 />
               </div>
-              <button type="button" className="btn" onClick={this.login}>
-                로그인
+              <button
+                type="button"
+                className="btn"
+                onClick={this.onSubmitLogin}
+              >
+                LOG IN
               </button>
             </div>
             <p className="log"></p>

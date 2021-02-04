@@ -1,97 +1,100 @@
 import React, { Component } from "react";
-import Api from "../utils/Api";
-import history from "../utils/history";
+import { observer, inject } from "mobx-react";
 
-export class WritePage extends Component {
+@inject("noteStore")
+@observer
+class WritePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      contents: "",
-      errorText: ""
+      writeLengthCheck: 0
     };
   }
-  onChangeValue = (e) => {
-    const name = e.target.name;
+  // value입력
+  onChangeValueWrite = (e) => {
+    const { noteStore } = this.props;
     const value = e.target.value;
-    this.setState({
-      [name]: value
-    });
+    const name = e.target.name;
+    console.log(name);
+    if (name === "contents") {
+      const check = value.length;
+      if (check > 10) {
+        alert("10글자 넘엇떠");
+      } else {
+        noteStore.onChangeValueWrite(name, value);
+        this.setState({
+          writeLengthCheck: check
+        });
+      }
+    } else if (name === "title") {
+      noteStore.onChangeValueWrite(name, value);
+    }
   };
 
-  // 등록버튼
-  onSubmitForm = () => {
-    const { title, contents } = this.state;
-    if (!title || !contents) {
-      alert("글을 작성하세요!!");
-    } else {
-      Api.post("posts", {
-        title,
-        contents
-      })
-        .then(() => {
-          alert("게시글이 등록되었습니다. 메인페이지로 이동합니다.");
-          history.push("/main");
-        })
-        .catch(({ response }) => {
-          this.setState({
-            errorText: response.data.message
-          });
-        });
-    }
+  // 게시물 등록
+  onSubmitFormWrite = () => {
+    const { noteStore } = this.props;
+    noteStore.onSubmitFormWrite();
   };
 
   // 취소버튼
-  cancelForm = () => {
-    const confirmCheck = window.confirm("정말 취소할거니??");
-    if (confirmCheck) {
-      // confirm창 확인 클릭시
-      history.push("/main");
-    }
+  cancelFormWrite = () => {
+    const { noteStore } = this.props;
+    noteStore.cancelFormWrite();
   };
+
   render() {
-    const { title, contents } = this.state;
+    const { noteStore } = this.props;
+    const { writeFormValue } = noteStore;
+    const { title, contents } = writeFormValue;
     return (
       <div className="contents">
-        <h1 className="page-header">학습노트 등록</h1>
+        <h1 className="page-header list">노트 등록</h1>
         <div className="form-wrapper">
           <div>
             <div className="form">
-              <label htmlFor="Title">Title</label>
+              <label htmlFor="Title" className="write-title">
+                Title
+              </label>
               <input
                 type="text"
                 id="Title"
                 name="title"
                 placeholder="제목을 입력해주세요."
                 value={title}
-                onChange={this.onChangeValue}
+                onChange={this.onChangeValueWrite}
               />
             </div>
             <div className="form">
-              <label htmlFor="Contents">Contents</label>
+              <label htmlFor="Contents" className="write-title">
+                Contents
+              </label>
               <textarea
                 name="contents"
                 id="Contents"
                 placeholder="내용을 입력해주세요."
                 value={contents}
-                onChange={this.onChangeValue}
+                onChange={this.onChangeValueWrite}
               ></textarea>
-              <div className="validation-chk">숫자체크</div>
+              <div className="validation-chk">
+                {this.state.writeLengthCheck}
+              </div>
             </div>
-            <button type="submit" className="btn" onClick={this.onSubmitForm}>
+            <button
+              type="submit"
+              className="btn write-btn"
+              onClick={this.onSubmitFormWrite}
+            >
               등록
             </button>
             <button
               type="button"
-              className="btn outline"
-              onClick={this.cancelForm}
+              className="btn outline write-btn"
+              onClick={this.cancelFormWrite}
             >
               취소
             </button>
           </div>
-          {this.state.errorText ? (
-            <p className="log">{this.state.errorText}</p>
-          ) : null}
         </div>
       </div>
     );
