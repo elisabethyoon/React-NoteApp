@@ -23,42 +23,45 @@ class SingupPage extends Component {
     const { username, password, nickname } = formValueSignup;
     return (
       <div>
-        <h1 className="page-header">회원가입</h1>
         <div className="contents">
           <div className="form-wrapper form-wrapper-sm">
+            <h1 className="page-header">SIGN UP</h1>
             <div action="" className="form">
               <div>
-                <label htmlFor="username">id:</label>
+                <label htmlFor="username">ID</label>
                 <input
                   id="username"
                   type="text"
                   name="username"
                   value={username}
+                  placeholder="ID"
                   onChange={this.onChangeValue}
                 />
               </div>
               <div>
-                <label htmlFor="password">pw: </label>
+                <label htmlFor="password">PW</label>
                 <input
                   id="password"
                   type="text"
                   name="password"
                   value={password}
+                  placeholder="PW"
                   onChange={this.onChangeValue}
                 />
               </div>
               <div>
-                <label htmlFor="nickname">nickname: </label>
+                <label htmlFor="nickname">NICKNAME</label>
                 <input
                   id="nickname"
                   type="text"
                   name="nickname"
                   value={nickname}
+                  placeholder="NICKNAME"
                   onChange={this.onChangeValue}
                 />
               </div>
               <button type="button" className="btn" onClick={this.onSubmitForm}>
-                회원 가입
+                SIGN UP
               </button>
             </div>
           </div>

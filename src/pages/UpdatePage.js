@@ -30,11 +30,13 @@ class UpdatePage extends Component {
     const { title, contents } = updateFormValue;
     return (
       <div className="contents">
-        <h1 className="page-header">노트 수정</h1>
+        <h1 className="page-header list">노트 수정</h1>
         <div className="form-wrapper">
           <div>
             <div className="form">
-              <label htmlFor="Title">Title</label>
+              <label htmlFor="Title" className="write-title">
+                Title
+              </label>
               <input
                 type="text"
                 id="Title"
@@ -45,7 +47,9 @@ class UpdatePage extends Component {
               />
             </div>
             <div className="form">
-              <label htmlFor="Contents">Contents</label>
+              <label htmlFor="Contents" className="write-title">
+                Contents
+              </label>
               <textarea
                 name="contents"
                 id="Contents"
@@ -55,10 +59,14 @@ class UpdatePage extends Component {
               ></textarea>
               <div className="validation-chk">숫자체크</div>
             </div>
-            <button type="submit" className="btn" onClick={this.onSubmitUpdate}>
+            <button
+              type="submit"
+              className="btn write-btn"
+              onClick={this.onSubmitUpdate}
+            >
               수정완료
             </button>
-            <button type="button" className="btn outline">
+            <button type="button" className="btn outline write-btn">
               취소
             </button>
           </div>

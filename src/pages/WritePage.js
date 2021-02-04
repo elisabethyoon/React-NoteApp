@@ -49,11 +49,13 @@ class WritePage extends Component {
     const { title, contents } = writeFormValue;
     return (
       <div className="contents">
-        <h1 className="page-header">학습노트 등록</h1>
+        <h1 className="page-header list">노트 등록</h1>
         <div className="form-wrapper">
           <div>
             <div className="form">
-              <label htmlFor="Title">Title</label>
+              <label htmlFor="Title" className="write-title">
+                Title
+              </label>
               <input
                 type="text"
                 id="Title"
@@ -64,7 +66,9 @@ class WritePage extends Component {
               />
             </div>
             <div className="form">
-              <label htmlFor="Contents">Contents</label>
+              <label htmlFor="Contents" className="write-title">
+                Contents
+              </label>
               <textarea
                 name="contents"
                 id="Contents"
@@ -78,14 +82,14 @@ class WritePage extends Component {
             </div>
             <button
               type="submit"
-              className="btn"
+              className="btn write-btn"
               onClick={this.onSubmitFormWrite}
             >
               등록
             </button>
             <button
               type="button"
-              className="btn outline"
+              className="btn outline write-btn"
               onClick={this.cancelFormWrite}
             >
               취소

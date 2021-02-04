@@ -23,27 +23,29 @@ class Login extends Component {
     const { username, password } = formValueLogin;
     return (
       <div>
-        <h1 className="page-header">로그인</h1>
         <div className="contents">
           <div className="form-wrapper form-wrapper-sm">
+            <h1 className="page-header">Login</h1>
             <div className="form">
               <div>
-                <label htmlFor="username">id:</label>
+                <label htmlFor="username">ID</label>
                 <input
                   id="username"
                   type="text"
                   name="username"
                   value={username}
+                  placeholder="ID"
                   onChange={this.onChangeValueLogin}
                 />
               </div>
               <div>
-                <label htmlFor="password">pw: </label>
+                <label htmlFor="password">PW</label>
                 <input
                   id="password"
                   type="password"
                   name="password"
                   value={password}
+                  placeholder="PW"
                   onChange={this.onChangeValueLogin}
                 />
               </div>
@@ -52,7 +54,7 @@ class Login extends Component {
                 className="btn"
                 onClick={this.onSubmitLogin}
               >
-                로그인
+                LOG IN
               </button>
             </div>
             <p className="log"></p>

@@ -37,6 +37,9 @@ button {
   margin: 0;
   cursor: pointer;
 }
+button:focus {
+  outline: none;
+}
 
 *,
 *:after,
@@ -67,23 +70,27 @@ a {
   color: #364f6b;
   text-decoration: none;
 }
-a:hover {
+/* a:hover {
   color: #3fc1c9;
-}
+} */
 
 /*--- LAYOUT ---*/
 .contents {
   max-width: 1020px;
+  min-width: 600px;
   margin: 0 auto;
   padding: 0 5px;
   width: 100%;
 }
 /*--- HEADER ---*/
 .page-header {
-  font-size: 45px;
+  font-size: 35px;
   font-weight: 600;
-  color: #456155;
-  padding: 30px 5px 15px;
+  color: #333;
+}
+
+.page-header.list {
+  margin-top: 50px;
 }
 
 /*--- FORM ---*/
@@ -92,18 +99,20 @@ a:hover {
   align-items: center;
 }
 .form-wrapper {
+  margin-top: 40px;
+  padding: 40px 30px 40px;
+  border-radius: 20px;
   background: white;
   -webkit-box-shadow: 0 20px 20px rgba(0, 0, 0, 0.08);
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.08);
-  border-radius: 3px;
-  padding: 15px 15px;
 }
 .form-wrapper.form-wrapper-sm {
   max-width: 500px;
   margin: 40px auto;
+  border-radius: 20px;
 }
 .form-wrapper-sm .page-header {
-  padding: 0px 0 20px;
+  padding: 0px 0 30px;
 }
 .form {
   width: 460px;
@@ -118,21 +127,37 @@ a:hover {
   justify-content: space-between;
 }
 .form label {
+  display: none;
+  /* width: 100%;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #364f6b;
+  font-size: 90%; */
+}
+.form label.write-title {
   width: 100%;
   display: block;
   margin-bottom: 0.5rem;
   color: #364f6b;
   font-size: 90%;
 }
+.form input#Title,
+.form textarea#Contents {
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+}
 .form input,
 .form textarea {
   font-family: inherit;
   font-size: 100%;
   width: 100%;
-  border: 1px solid #dae1e7;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  border: none;
+  border-bottom: 2px solid #d1d1d1;
   padding: 0.5rem 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 30px;
+}
+.form input:focus {
+  outline: none;
 }
 .form input.valid {
   border: 1px solid #21b314;
@@ -141,28 +166,32 @@ a:hover {
   border: 1px solid red;
 }
 .form div:nth-last-child(2) {
-  margin-bottom: 0.5rem;
+  margin-bottom: 20px;
+}
+.btn.write-btn {
+  width: 49%;
+  background: #6eaee9;
+}
+.btn.write-btn.outline {
+  float: right;
+  background: transparent;
+  border: 1px solid #6eaee9;
+  color: #6eaee9;
 }
 .btn {
   display: inline-block;
-  height: 40px;
-  line-height: 40px;
+  width: 100%;
+  height: 46px;
   padding: 0 20px;
-  background: #fe9616;
-  color: #fff;
+  border: 0 solid #dae1e7;
+  background: linear-gradient(to right, #79e2ea, #6888e9);
   font-weight: 700;
   font-size: 100%;
+  color: #fff;
   vertical-align: middle;
-  border-radius: 0.25rem;
-  border: 0 solid #dae1e7;
 }
 .btn + .btn {
   margin-left: 10px;
-}
-.btn.outline {
-  border: 1px solid #000;
-  background-color: #fff;
-  color: #222;
 }
 .btn.disabled {
   opacity: 0.5;
@@ -179,7 +208,7 @@ a:hover {
 
 /*--- LIST ---*/
 .list-container {
-  padding-top: 13px;
+  padding-top: 32px;
 }
 .list-container.sticky {
   margin-top: 76px;
@@ -194,42 +223,67 @@ a:hover {
   width: 320px;
   height: 250px;
   margin: 7px;
-  padding: 10px 20px;
+  padding: 24px 12px 24px 30px;
   background: white;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.08);
-  border-radius: 3px;
+  border-radius: 20px;
+}
+.post-dot {
+  display: inline-block;
+  position: absolute;
+  top: 12px;
+  left: 13px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6eaee9;
 }
 .post-title {
-  font-size: 24px;
+  color: #333;
+  font-size: 26px;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 20px;
 }
 .post-contents {
-  height: 160px;
+  height: 133px;
   overflow-y: auto;
   font-size: 18px;
+  color: #666;
+}
+.post-info {
+  overflow: hidden;
 }
 .post-time {
-  position: absolute;
-  bottom: 4px;
-  right: 5px;
+  float: left;
+  margin-top: 7px;
   font-size: 14px;
   color: #9e9e9e;
 }
+.box-icon {
+  float: right;
+}
 .icon {
-  font-size: 1.3rem;
+  font-size: 22px;
   cursor: pointer;
-  color: #364f6b;
+  color: #6eaee9;
   padding-right: 0.4rem;
 }
-.icon:hover {
+/* .icon:hover {
   color: #3fc1c9;
-}
-.icon:active {
+} */
+/* .icon:active {
   color: #fc5185;
-}
+} */
 .ion-md-create {
-  padding-left: 0.1rem;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 4px;
+  padding: 2px 0 0 7px;
+  border-radius: 10px;
+}
+.ion-md-trash {
+  color: #6e7378;
 }
 .create-button {
   width: 60px;
@@ -243,7 +297,7 @@ a:hover {
   justify-content: center;
   color: white;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-  background: #fe9616;
+  background: #6eaee9;
   border: 3px solid white;
 }
 .username {
@@ -254,9 +308,15 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #927dfc;
+  background-color: #6eaee9;
   z-index: 2;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 a {
   color: #dedede;
@@ -272,7 +332,30 @@ a.logo {
   font-weight: normal;
 }
 .navigations a {
+  position: relative;
   margin-left: 10px;
+  color: #fff;
+}
+
+.navigations button {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  color: #fff;
+}
+
+.navigations a:first-child {
+  padding-right: 13px;
+}
+
+.navigations a:first-child::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 0;
+  width: 1px;
+  height: 16px;
+  background: #fff;
 }
 .fixed {
   position: fixed;
@@ -292,6 +375,9 @@ a.router-link-exact-active {
 }
 .form-wrapper textarea {
   height: 200px;
+}
+.form-wrapper textarea:focus {
+  outline: none;
 }
 .validation-chk {
   margin-bottom: 10px;
