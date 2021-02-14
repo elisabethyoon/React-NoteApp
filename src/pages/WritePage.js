@@ -10,16 +10,20 @@ class WritePage extends Component {
       writeLengthCheck: 0
     };
   }
+
+  componentWillUnmount() {
+    const { noteStore } = this.props;
+    noteStore.clear();
+  }
   // value입력
   onChangeValueWrite = (e) => {
     const { noteStore } = this.props;
     const value = e.target.value;
     const name = e.target.name;
-    console.log(name);
     if (name === "contents") {
       const check = value.length;
-      if (check > 10) {
-        alert("10글자 넘엇떠");
+      if (check > 20) {
+        alert("20글자 이상은 등록할 수 없습니다.");
       } else {
         noteStore.onChangeValueWrite(name, value);
         this.setState({

@@ -27,6 +27,15 @@ class LoginStore {
   @observable
   token = localStorage.getItem("token") || "";
 
+  // clear 함수
+  @action
+  clear() {
+    this.formValueLogin = {
+      username: "",
+      password: ""
+    };
+  }
+
   // 회원가입 input value
   @action
   onChangeValue(name, value) {

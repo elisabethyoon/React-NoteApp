@@ -17,6 +17,12 @@ class Login extends Component {
     const { loginStore } = this.props;
     loginStore.onSubmitLogin();
   };
+
+  componentWillUnmount() {
+    const { loginStore } = this.props;
+    loginStore.clear();
+  }
+
   render() {
     const { loginStore } = this.props;
     const { formValueLogin } = loginStore;

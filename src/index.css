@@ -300,6 +300,9 @@ a {
   background: #6eaee9;
   border: 3px solid white;
 }
+.empty-content h3 {
+  padding-left: 100px;
+}
 .username {
   color: white;
 }

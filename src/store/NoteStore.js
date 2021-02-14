@@ -33,6 +33,15 @@ class NoteStore {
     originContents: ""
   };
 
+  // clear함수
+  @action
+  clear() {
+    this.writeFormValue = {
+      title: "",
+      contents: ""
+    };
+  }
+
   // 메인페이지 list data
   @action
   fetchList() {
