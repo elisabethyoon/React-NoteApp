@@ -1,5 +1,5 @@
 # React 학습 노트 애플리케이션
-> REST API를 이용한 CRUD기능의 학습노트 애플리케이션입니다.
+> REST API를 이용한 CRUD기능의 학습노트 애플리케이션입니다. (상태관리 - Mobx)
 
 gif
 
@@ -18,6 +18,7 @@ yarn start
 
 ## 주요 기술 스택
 * React
+* Mobx
 * React Router
-* mobx
 * Axios
+* javascript
