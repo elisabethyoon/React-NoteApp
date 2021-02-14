@@ -1,10 +1,4 @@
-import {
-  observable,
-  action,
-  runInAction,
-  makeAutoObservable,
-  toJS
-} from "mobx";
+import { observable, action, runInAction, makeAutoObservable } from "mobx";
 import Api from "../utils/Api";
 import history from "../utils/history";
 
@@ -140,7 +134,7 @@ class NoteStore {
       title,
       contents
     };
-    if (title === originTitle || contents === originContents) {
+    if (title === originTitle && contents === originContents) {
       alert("수정된 내용이 없습니다");
     } else {
       Api.put(`posts/${noteId}`, apiParams)
@@ -154,23 +148,37 @@ class NoteStore {
     }
   }
 
+  // 수정취소
+  @action
+  cancelUpdate() {
+    const confirmCheck = window.confirm(
+      "수정사항이 변경되지않습니다. 취소하시겠습니까?"
+    );
+    if (confirmCheck) {
+      history.push("/main");
+    }
+  }
+
   // 삭제
   @action
   deleteForm(userId) {
-    Api.delete(`posts/${userId}`)
-      .then((res) => {
-        runInAction(() => {
-          alert("삭제가 완료되었습니다.");
-          Api.get("posts")
-            .then(({ data }) => {
-              runInAction(() => {
-                this.posts = data.posts;
-              });
-            })
-            .catch((err) => console.log(err));
-        });
-      })
-      .catch((err) => console.log(err));
+    const confirmCheck = window.confirm("삭제하시겠습니까?");
+    if (confirmCheck) {
+      Api.delete(`posts/${userId}`)
+        .then((res) => {
+          runInAction(() => {
+            alert("삭제가 완료되었습니다.");
+            Api.get("posts")
+              .then(({ data }) => {
+                runInAction(() => {
+                  this.posts = data.posts;
+                });
+              })
+              .catch((err) => console.log(err));
+          });
+        })
+        .catch((err) => console.log(err));
+    }
   }
 }
 

@@ -14,10 +14,10 @@ class App extends Component {
       <div>
         <AppHeader />
         <Switch>
-          <Route exact path={["/", "/main"]} component={MainPage}></Route>
+          <Route exact path={"/main"} component={MainPage}></Route>
           <Route
             exact
-            path={"/login"}
+            path={["/", "/login"]}
             render={(props) => <LoginPage {...props} />}
           ></Route>
           <Route exact path="/signup" component={SingupPage}></Route>

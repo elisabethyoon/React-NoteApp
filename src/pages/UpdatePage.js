@@ -24,6 +24,12 @@ class UpdatePage extends Component {
     const noteId = this.props.match.params.noteId;
     noteStore.onSubmitUpdate(noteId);
   };
+
+  // 수정취소 버튼
+  cancelUpdate = () => {
+    const { noteStore } = this.props;
+    noteStore.cancelUpdate();
+  };
   render() {
     const { noteStore } = this.props;
     const { updateFormValue } = noteStore;
@@ -57,7 +63,7 @@ class UpdatePage extends Component {
                 value={contents}
                 onChange={this.onChangeValueUpdate}
               ></textarea>
-              <div className="validation-chk">숫자체크</div>
+              {/* <div className="validation-chk">숫자체크</div> */}
             </div>
             <button
               type="submit"
@@ -66,7 +72,11 @@ class UpdatePage extends Component {
             >
               수정완료
             </button>
-            <button type="button" className="btn outline write-btn">
+            <button
+              type="button"
+              className="btn outline write-btn"
+              onClick={this.cancelUpdate}
+            >
               취소
             </button>
           </div>

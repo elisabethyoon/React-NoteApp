@@ -2,7 +2,7 @@ import axios from "axios";
 import rootStore from "../store/RootStore";
 
 const Api = axios.create({
-  baseURL: "http://localhost:3001/"
+  baseURL: "http://localhost:3000/"
 });
 // let isLoading = true;
 // Api.defaults.headers.common["Authorization"] = localStorage.getItem("token");
