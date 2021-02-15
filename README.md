@@ -1,6 +1,6 @@
 # React 학습 노트 애플리케이션
 > REST API를 이용한 CRUD기능의 학습노트 애플리케이션입니다. (상태관리 - Mobx)
-
+<img src="./src/images/noteapp1.gif" width="800px" height="400px" />
 
 
 
